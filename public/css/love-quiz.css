@@ -1,0 +1,365 @@
+:root {
+    --ink: #150d19;
+    --wine: #481328;
+    --plum: #29113a;
+    --rose: #ff5f8c;
+    --coral: #ff8a72;
+    --gold: #ffd38a;
+    --mint: #8ce7d7;
+    --paper: rgba(255, 246, 250, 0.86);
+    --paper-strong: rgba(255, 255, 255, 0.94);
+    --line: rgba(255, 255, 255, 0.22);
+    --shadow: 0 28px 90px rgba(13, 4, 16, 0.5);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    overflow: hidden;
+    color: #fff9fb;
+    font-family: "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+        radial-gradient(circle at 16% 12%, rgba(255, 138, 114, 0.42), transparent 30rem),
+        radial-gradient(circle at 82% 16%, rgba(140, 231, 215, 0.24), transparent 28rem),
+        linear-gradient(140deg, #150d19 0%, #481328 46%, #201839 100%);
+}
+
+body::before {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    content: "";
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent);
+}
+
+button {
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+}
+
+#heartCanvas {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+
+.gift-shell {
+    display: grid;
+    min-height: 100vh;
+    padding: clamp(1rem, 3vw, 2rem);
+    place-items: center;
+}
+
+.gift-card {
+    position: relative;
+    width: min(100%, 720px);
+    min-height: min(760px, calc(100vh - 2rem));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    padding: clamp(1.2rem, 4vw, 2.8rem);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08)),
+        rgba(22, 7, 25, 0.58);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(24px);
+}
+
+.gift-card::after {
+    position: absolute;
+    inset: auto -12% -28% -12%;
+    height: 44%;
+    content: "";
+    background: linear-gradient(90deg, rgba(255, 95, 140, 0.28), rgba(255, 211, 138, 0.18), rgba(140, 231, 215, 0.18));
+    filter: blur(42px);
+    pointer-events: none;
+}
+
+.topbar {
+    position: absolute;
+    top: clamp(1rem, 3vw, 1.5rem);
+    right: clamp(1rem, 3vw, 1.5rem);
+    left: clamp(1rem, 3vw, 1.5rem);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.progress-copy {
+    display: grid;
+    width: min(62%, 290px);
+    gap: 0.55rem;
+    color: rgba(255, 249, 251, 0.78);
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.progress-track {
+    height: 0.42rem;
+    overflow: hidden;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.17);
+}
+
+#progressFill {
+    display: block;
+    width: 0%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--rose), var(--gold), var(--mint));
+    transition: width 360ms ease;
+}
+
+.icon-btn {
+    width: 2.9rem;
+    height: 2.9rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+    transition: transform 180ms ease, background 180ms ease;
+}
+
+.icon-btn:hover,
+.icon-btn:focus-visible {
+    background: rgba(255, 255, 255, 0.23);
+    transform: translateY(-2px);
+}
+
+.kicker {
+    position: relative;
+    z-index: 1;
+    width: fit-content;
+    margin: 0 0 1rem;
+    padding: 0.38rem 0.72rem;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    color: var(--gold);
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+h1 {
+    position: relative;
+    z-index: 1;
+    min-height: 7.8rem;
+    margin: 0;
+    max-width: 13ch;
+    color: #fff9fb;
+    font-size: clamp(2.15rem, 7vw, 4.9rem);
+    line-height: 1.04;
+    letter-spacing: 0;
+    text-wrap: balance;
+}
+
+h1::after {
+    display: inline-block;
+    width: 0.08em;
+    height: 0.84em;
+    margin-left: 0.08em;
+    content: "";
+    vertical-align: -0.08em;
+    background: var(--gold);
+    animation: blink 780ms steps(2, start) infinite;
+}
+
+.answer-zone {
+    position: relative;
+    z-index: 3;
+    min-height: 9.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.9rem;
+    margin-top: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+.answer-btn {
+    min-width: 9.3rem;
+    min-height: 3.25rem;
+    padding: 0.9rem 1.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(255, 95, 140, 0.96), rgba(255, 138, 114, 0.92));
+    box-shadow: 0 16px 35px rgba(255, 95, 140, 0.24);
+    font-weight: 800;
+    transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.answer-btn.secondary {
+    color: #27131b;
+    background: linear-gradient(135deg, rgba(255, 211, 138, 0.96), rgba(140, 231, 215, 0.86));
+    box-shadow: 0 16px 35px rgba(140, 231, 215, 0.15);
+}
+
+.answer-btn.no-btn {
+    background: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
+}
+
+.answer-btn:hover,
+.answer-btn:focus-visible {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 22px 48px rgba(255, 95, 140, 0.3);
+}
+
+.answer-btn.no-btn.is-running {
+    position: fixed;
+    z-index: 20;
+    transition: left 220ms ease, top 220ms ease, transform 180ms ease;
+}
+
+.final-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 640ms ease, transform 850ms ease;
+    pointer-events: none;
+}
+
+.final-image::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background:
+        linear-gradient(90deg, rgba(14, 6, 16, 0.72), rgba(14, 6, 16, 0.22) 54%, rgba(14, 6, 16, 0.64)),
+        linear-gradient(0deg, rgba(14, 6, 16, 0.8), transparent 44%);
+}
+
+.final-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gift-card.is-final .final-image {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.gift-card.is-final .kicker {
+    color: #fff;
+    background: rgba(255, 95, 140, 0.62);
+}
+
+.gift-card.is-final h1 {
+    max-width: 14ch;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.42);
+}
+
+.pop-heart,
+.confetti {
+    position: fixed;
+    z-index: 12;
+    pointer-events: none;
+}
+
+.pop-heart {
+    color: var(--rose);
+    font-size: 1.4rem;
+    animation: popHeart 900ms ease forwards;
+}
+
+.confetti {
+    width: 0.55rem;
+    height: 0.9rem;
+    border-radius: 2px;
+    animation: confettiFall 1300ms ease-out forwards;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes popHeart {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.7);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(1.8) rotate(18deg);
+    }
+}
+
+@keyframes confettiFall {
+    from {
+        opacity: 1;
+        transform: translateY(-10px) rotate(0deg);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(160px) rotate(420deg);
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        overflow: hidden;
+    }
+
+    .gift-shell {
+        padding: 0.75rem;
+    }
+
+    .gift-card {
+        min-height: calc(100vh - 1.5rem);
+        justify-content: flex-end;
+        padding-top: 5.8rem;
+        padding-bottom: 1.25rem;
+    }
+
+    h1 {
+        min-height: 10.5rem;
+        max-width: 11ch;
+        font-size: clamp(2.25rem, 13vw, 3.8rem);
+    }
+
+    .answer-zone {
+        min-height: 12.5rem;
+        align-content: flex-start;
+    }
+
+    .answer-btn {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .answer-btn.no-btn.is-running {
+        width: auto;
+        min-width: 7.2rem;
+    }
+}

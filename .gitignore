@@ -1,7 +1,17 @@
 /vendor/
 node_modules/
+*.log
+.DS_Store
+Thumbs.db
 npm-debug.log
 yarn-error.log
+
+/.fleet
+/.idea
+/.nova
+/.phpunit.cache
+/.vscode
+/.zed
 
 # Laravel 4 specific
 bootstrap/compiled.php
